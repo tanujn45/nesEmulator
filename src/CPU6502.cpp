@@ -1,7 +1,6 @@
 #include "CPU6502.h"
 
 #include <cstdint>
-#include <ios>
 
 #include "Bus.h"
 
@@ -207,6 +206,14 @@ uint8_t CPU6502::ZPY() {
 }
 
 uint8_t CPU6502::REL() {
+    addr_rel = read(pc);
+    pc++;
+    
+    // Check if the last bit i.e Negative bit is 
+    // set or not.
+    if (addr_rel & 0x80) {
+        addr_rel |= 0xFF00;
+    }
     return 0;
 }
 
@@ -285,9 +292,14 @@ uint8_t CPU6502::IZY() {
     uint16_t t = read(pc);
     pc++;
 
-    uint16_t lo = read((t + (uint16_t)y) & 0x00FF);
-    uint16_t hi = read((t + (uint16_t)y + 1) & 0x00FF);
+    uint16_t lo = read(t & 0x00FF);
+    uint16_t hi = read((t + 1) & 0x00FF);
 
-    addr_abs = hi << 8 | lo;
+    addr_abs = (hi << 8) | lo;
+    addr_abs += y;
+
+    if ((addr_abs & 0xFF00) != (hi << 8)) {
+        return 1;
+    }
     return 0;
 }

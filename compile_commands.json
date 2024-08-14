@@ -22,12 +22,12 @@
       "-Wall",
       "-c",
       "-o",
-      "obj/main.o",
-      "src/main.cpp"
+      "obj/CPU6502.o",
+      "src/CPU6502.cpp"
     ],
     "directory": "/home/tanujn45/Documents/nesEmulator",
-    "file": "/home/tanujn45/Documents/nesEmulator/src/main.cpp",
-    "output": "/home/tanujn45/Documents/nesEmulator/obj/main.o"
+    "file": "/home/tanujn45/Documents/nesEmulator/src/CPU6502.cpp",
+    "output": "/home/tanujn45/Documents/nesEmulator/obj/CPU6502.o"
   },
   {
     "arguments": [
@@ -37,11 +37,11 @@
       "-Wall",
       "-c",
       "-o",
-      "obj/olc6502.o",
-      "src/olc6502.cpp"
+      "obj/main.o",
+      "src/main.cpp"
     ],
     "directory": "/home/tanujn45/Documents/nesEmulator",
-    "file": "/home/tanujn45/Documents/nesEmulator/src/olc6502.cpp",
-    "output": "/home/tanujn45/Documents/nesEmulator/obj/olc6502.o"
+    "file": "/home/tanujn45/Documents/nesEmulator/src/main.cpp",
+    "output": "/home/tanujn45/Documents/nesEmulator/obj/main.o"
   }
 ]
