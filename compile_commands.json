@@ -1,0 +1,47 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-Iinclude",
+      "-Wall",
+      "-c",
+      "-o",
+      "obj/Bus.o",
+      "src/Bus.cpp"
+    ],
+    "directory": "/home/tanujn45/Documents/nesEmulator",
+    "file": "/home/tanujn45/Documents/nesEmulator/src/Bus.cpp",
+    "output": "/home/tanujn45/Documents/nesEmulator/obj/Bus.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-Iinclude",
+      "-Wall",
+      "-c",
+      "-o",
+      "obj/main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/home/tanujn45/Documents/nesEmulator",
+    "file": "/home/tanujn45/Documents/nesEmulator/src/main.cpp",
+    "output": "/home/tanujn45/Documents/nesEmulator/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-Iinclude",
+      "-Wall",
+      "-c",
+      "-o",
+      "obj/olc6502.o",
+      "src/olc6502.cpp"
+    ],
+    "directory": "/home/tanujn45/Documents/nesEmulator",
+    "file": "/home/tanujn45/Documents/nesEmulator/src/olc6502.cpp",
+    "output": "/home/tanujn45/Documents/nesEmulator/obj/olc6502.o"
+  }
+]
