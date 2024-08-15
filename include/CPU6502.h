@@ -1,8 +1,12 @@
 #pragma once
 
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
+
+using namespace std;
+
 class Bus;
 
 class CPU6502 {
@@ -35,13 +39,13 @@ class CPU6502 {
     void SetFlag(FLAGS6502 f, bool v);
 
     struct INSTRUCTION {
-        std::string name;
+        string name;
         uint8_t (CPU6502::*operate)(void) = nullptr;
         uint8_t (CPU6502::*addrmode)(void) = nullptr;
         uint8_t cycles = 0;
     };
 
-    std::vector<INSTRUCTION> lookup;
+    vector<INSTRUCTION> lookup;
 
    public:
     CPU6502();
@@ -50,6 +54,10 @@ class CPU6502 {
     void ConnectBus(Bus *n) {
         bus = n;
     }
+
+    // Helper functions
+    bool complete();
+    map<uint16_t, string> disassemble(uint16_t nStart, uint16_t nStop);
 
     // Addressing Modes
     uint8_t IMP();
