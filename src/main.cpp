@@ -2,6 +2,12 @@
 
 using namespace std;
 
+void ClearScreen();
+
 int main() {
-    cout << "Hello world";
+    ClearScreen();
+}
+
+void ClearScreen() {
+    std::cout << "\033[2J\033[1;1H";
 }
