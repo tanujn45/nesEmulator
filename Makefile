@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Iinclude -Wall
+CXXFLAGS = -std=c++17 -Iinclude -Wall 
+# CXXFLAGS = -std=c++17 -Iinclude -Wall -lpng16 -I/usr/local/include -L/usr/local/lib -framework OpenGL -framework Foundation -framework GLUT
 
 SRC_DIR = src
 OBJ_DIR = obj

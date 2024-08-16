@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
@@ -84,7 +85,7 @@ class Emulation {
     void printCpu() {
         cout << "\nSTATUS: ";
         cout << color(nes.cpu.status & CPU6502::C) << "C" << ORIG_COLOR << " ";
-        cout << color(nes.cpu.status & CPU6502::Z) << "V" << ORIG_COLOR << " ";
+        cout << color(nes.cpu.status & CPU6502::Z) << "Z" << ORIG_COLOR << " ";
         cout << color(nes.cpu.status & CPU6502::I) << "I" << ORIG_COLOR << " ";
         cout << color(nes.cpu.status & CPU6502::D) << "D" << ORIG_COLOR << " ";
         cout << color(nes.cpu.status & CPU6502::B) << "B" << ORIG_COLOR << " ";
@@ -103,39 +104,70 @@ class Emulation {
     }
 
     void printCode(int nLines) {
-        cout << "\n\n";
-        auto it = mapAsm.find(nes.cpu.pc);
+        cout << endl;
+        auto it_a = mapAsm.find(nes.cpu.pc);
+        int nLineY = nLines >> 1;
+        if (it_a != mapAsm.end()) {
+            vector<string> lines;
+            while (nLineY-- > 0) {
+                if (it_a != mapAsm.begin()) {
+                    lines.push_back((--it_a)->second);
+                } else {
+                    break;
+                }
+            }
+            // Reverse the collected lines to print them in the correct order
+            reverse(lines.begin(), lines.end());
+            for (const auto& line : lines) {
+                cout << line << endl;
+            }
+        }
+        it_a = mapAsm.find(nes.cpu.pc);
+        nLineY = nLines >> 1;
+        if (it_a != mapAsm.end()) {
+            cout << CYAN << (*it_a).second << ORIG_COLOR << endl;
+            while (nLineY++ < nLines) {
+                if (++it_a != mapAsm.end()) {
+                    cout << (*it_a).second << endl;
+                }
+            }
+        }
+    }
+    /*
+        void printCode(int nLines) {
+            cout << "\n\n";
+            auto it = mapAsm.find(nes.cpu.pc);
 
-        // Center the PC instruction line
-        int halfLines = nLines / 2;
-        int currentLine = 0;
+            // Center the PC instruction line
+            int halfLines = nLines / 2;
+            int currentLine = 0;
 
-        cout << "Code Disassembly:\n";
+            cout << "Code Disassembly:\n";
 
-        // Print lines before the current PC
-        for (int i = 0; i < halfLines && it != mapAsm.begin(); ++i) {
-            if (it != mapAsm.begin()) {
-                --it;
+            // Print lines before the current PC
+            for (int i = 0; i < halfLines && it != mapAsm.begin(); ++i) {
+                if (it != mapAsm.begin()) {
+                    --it;
+                    ++currentLine;
+                }
+            }
+
+            // Print the PC line
+            if (it != mapAsm.end()) {
+                cout << CYAN << "$" << hex(it->first, 4) << ": " << it->second
+                     << ORIG_COLOR << "\n";
+                ++currentLine;
+                ++it;
+            }
+
+            // Print lines after the current PC
+            while (currentLine < nLines && it != mapAsm.end()) {
+                cout << "$" << hex(it->first, 4) << ": " << it->second << "\n";
+                ++it;
                 ++currentLine;
             }
         }
-
-        // Print the PC line
-        if (it != mapAsm.end()) {
-            cout << CYAN << "$" << hex(it->first, 4) << ": " << it->second
-                 << ORIG_COLOR << "\n";
-            ++currentLine;
-            ++it;
-        }
-
-        // Print lines after the current PC
-        while (currentLine < nLines && it != mapAsm.end()) {
-            cout << "$" << hex(it->first, 4) << ": " << it->second << "\n";
-            ++it;
-            ++currentLine;
-        }
-    }
-
+    */
     void ClearScreen() {
         cout << "\033[2J\033[1;1H";
     }
@@ -159,9 +191,9 @@ class Emulation {
             printRam(0x0000, 16, 16);
             printRam(0x8000, 16, 16);
             printCpu();
-            printCode(20);
+            printCode(10);
 
-            cout << "[s]tep [r]eset [i]rq [n]mi [q]uit\n";
+            cout << "[s]tep [r]eset [i]rq [n]mi [q]uit: ";
             cout << "Enter Command: ";
             cin >> command;
             ClearScreen();
