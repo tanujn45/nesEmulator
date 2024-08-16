@@ -52,8 +52,6 @@ class Emulation {
         nes.ram[0xFFFC] = 0x00;
         nes.ram[0xFFFD] = 0x80;
 
-        // Dont forget to set IRQ and NMI vectors if you want to play with those
-
         // Extract dissassembly
         mapAsm = nes.cpu.disassemble(0x0000, 0xFFFF);
         nes.cpu.reset();
@@ -101,6 +99,7 @@ class Emulation {
         cout << "Y: $" << hex(nes.cpu.y, 2) << " [" << to_string(nes.cpu.y)
              << "]" << "  ";
         cout << "Stack P: $" << hex(nes.cpu.stkp, 4);
+        cout << "\n";
     }
 
     void printCode(int nLines) {
@@ -133,41 +132,7 @@ class Emulation {
             }
         }
     }
-    /*
-        void printCode(int nLines) {
-            cout << "\n\n";
-            auto it = mapAsm.find(nes.cpu.pc);
 
-            // Center the PC instruction line
-            int halfLines = nLines / 2;
-            int currentLine = 0;
-
-            cout << "Code Disassembly:\n";
-
-            // Print lines before the current PC
-            for (int i = 0; i < halfLines && it != mapAsm.begin(); ++i) {
-                if (it != mapAsm.begin()) {
-                    --it;
-                    ++currentLine;
-                }
-            }
-
-            // Print the PC line
-            if (it != mapAsm.end()) {
-                cout << CYAN << "$" << hex(it->first, 4) << ": " << it->second
-                     << ORIG_COLOR << "\n";
-                ++currentLine;
-                ++it;
-            }
-
-            // Print lines after the current PC
-            while (currentLine < nLines && it != mapAsm.end()) {
-                cout << "$" << hex(it->first, 4) << ": " << it->second << "\n";
-                ++it;
-                ++currentLine;
-            }
-        }
-    */
     void ClearScreen() {
         cout << "\033[2J\033[1;1H";
     }
